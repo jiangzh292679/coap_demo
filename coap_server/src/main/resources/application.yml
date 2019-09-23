@@ -1,0 +1,9 @@
+server:
+  port: 8080
+
+coap:
+  server:
+    coap-host-name: 127.0.0.1
+    coap-port: 5683
+    coap-tcp-threads: 10
+    coap-tcp-idle-timeout: 3000
