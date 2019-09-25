@@ -3,6 +3,7 @@ package com.example.coap.resources;
 import java.util.List;
 import lombok.extern.slf4j.Slf4j;
 import org.eclipse.californium.core.CoapResource;
+import org.eclipse.californium.core.coap.CoAP.ResponseCode;
 import org.eclipse.californium.core.coap.Request;
 import org.eclipse.californium.core.server.resources.CoapExchange;
 import org.eclipse.californium.core.server.resources.Resource;
@@ -27,27 +28,46 @@ public class RestResource extends CoapResource {
     super(name);
   }
 
+  /**
+   * @Description: 处理GET请求
+   * @Param: [exchange]
+   * @return: void
+   * @Author: jiangzh
+   * @Date: 2019/9/25
+   */
   @Override
   public void handleGET(CoapExchange exchange) {
-
+    // 获取CoAP请求对象的封装
+    // 注意：想访问CoapExchange对象，要先调用advanced方法
     Request request = exchange.advanced().getRequest();
 
-    List<String> uriPath = request.getOptions().getUriPath();
+    log.info("handleGET coapExchange:{}", exchange.advanced());
+    log.info("handleGET request:{}", request);
 
-    log.info("handleGET coapExchange:{} , request:{}, uriPath:{}", exchange.advanced() , request, uriPath);
-
-    super.handleGET(exchange);
+    // 设置GET请求的返回值
+    exchange.respond("RestResource invoker success");
   }
 
+  /**
+   * @Description: 处理POST请求
+   * @Param: [exchange]
+   * @return: void
+   * @Author: jiangzh
+   * @Date: 2019/9/25
+   */
   @Override
   public void handlePOST(CoapExchange exchange) {
     Request request = exchange.advanced().getRequest();
     String payload = request.getPayloadString();
     List<String> uriPath = request.getOptions().getUriPath();
 
-    log.info("handlePOST coapExchange:{} , request:{}, uriPath:{}, payload:{}", exchange.advanced() , request, uriPath, payload);
+    log.info("handlePOST coapExchange:{}", exchange.advanced());
+    log.info("handlePOST request:{}", request);
+    log.info("handlePOST uriPath:{}", uriPath);
+    log.info("handlePOST payload:{}", payload);
 
-    super.handleGET(exchange);
+    // 设置POST请求的返回值
+    exchange.respond(ResponseCode.CHANGED);
   }
 
   /**

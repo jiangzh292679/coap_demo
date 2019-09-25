@@ -2,6 +2,7 @@ package com.example.coap.config;
 
 import com.example.coap.config.properties.CoAPServerProperties;
 import com.example.coap.resources.HelloWorldResource;
+import com.example.coap.resources.RestResource;
 import java.net.InetSocketAddress;
 import org.eclipse.californium.core.CoapResource;
 import org.eclipse.californium.core.CoapServer;
@@ -51,7 +52,11 @@ public class CoAPServerConfig {
   public CoapResource coapResource(){
     CoapResource coapResource = new CoapResource("jiangzh");
 
+    // 演示Resource的HelloWorld
     coapResource.add(new HelloWorldResource("v1"));
+
+    // 演示使用Resource处理RESTful风格的请求
+    coapResource.add(new RestResource("rest"));
 
     return coapResource;
   }
