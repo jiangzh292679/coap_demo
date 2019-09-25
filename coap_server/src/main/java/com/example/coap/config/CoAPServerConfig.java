@@ -1,7 +1,9 @@
 package com.example.coap.config;
 
 import com.example.coap.config.properties.CoAPServerProperties;
+import com.example.coap.resources.HelloWorldResource;
 import java.net.InetSocketAddress;
+import org.eclipse.californium.core.CoapResource;
 import org.eclipse.californium.core.CoapServer;
 import org.eclipse.californium.core.network.CoapEndpoint;
 import org.eclipse.californium.core.network.config.NetworkConfig;
@@ -22,7 +24,7 @@ public class CoAPServerConfig {
   private CoAPServerProperties serverProperties;
 
   @Bean
-  public CoapServer coapServer(InetSocketAddress bindToAddress){
+  public CoapServer coapServer(InetSocketAddress bindToAddress,CoapResource coapResource){
     CoapServer server = new CoapServer();
 
     // 构建CoAP Endpoint
@@ -39,7 +41,19 @@ public class CoAPServerConfig {
     // 加入CoAP Endpoint支持
     server.addEndpoint(builder.build());
 
+    // 加入业务处理的resource
+    server.add(coapResource);
+
     return server;
+  }
+
+  @Bean
+  public CoapResource coapResource(){
+    CoapResource coapResource = new CoapResource("jiangzh");
+
+    coapResource.add(new HelloWorldResource("v1"));
+
+    return coapResource;
   }
 
   @Bean

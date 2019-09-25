@@ -18,12 +18,13 @@ public class CoAPClient {
 
   public static void main(String[] args) throws URISyntaxException, ConnectorException, IOException {
     // 待连接的CoAP Server
-    URI coapServerUri = new URI("coap://127.0.0.1:5683");
+    URI coapServerUri = new URI("coap://127.0.0.1:5683/jiangzh/v1");
 
     CoapClient coapClient = new CoapClient(coapServerUri);
     // 发送get请求
-    CoapResponse coapResponse = coapClient.get();
-
+//    CoapResponse coapResponse = coapClient.get();
+    // post请求，format：50 = application/json类型
+    CoapResponse coapResponse = coapClient.post("{\"a\":\"b\"}",50);
     // 将结果打印出来
     if (coapResponse!=null) {
       System.err.println("coapResponse code : "+coapResponse.getCode());
